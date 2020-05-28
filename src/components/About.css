@@ -1,0 +1,17 @@
+.about-example {
+	/*Simulates tab.  I guess I could just use the tab character*/
+	padding-left: 1em;
+}
+
+.info-card {
+	outline: 1px solid black;
+	box-shadow: 0px 3px 5px;
+	background: linear-gradient(#888, #ddd);
+	margin: 3em;
+	padding: 1em;
+	text-align: left;
+}
+
+.about {
+	background-color: lightgrey;
+}
