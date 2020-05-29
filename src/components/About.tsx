@@ -39,10 +39,7 @@ const About = () : JSX.Element => {
 			One way to solve this would be to keep track of what corrections are being made when they happen.  I think another approach would likely be 
 			some sort of a modification of an edit distance algorithm. <br/><br/>
 			There will probably be some more changes made to the language model corrector in the near future.  At moment I haven't had the chance to
-			test the model much.  I also think it would cool to have it correct the whole sentence.  The main question there is how to do that in a way
-			that is tractable when corrections are being displayed in real time.  Checking every combination of edits for each word in a sentence will
-			quickly become very slow.  I think with the right simplifying assumptions it should a reasonable task though.<br/><br/>
-			The styling could also use some improvement.</p>
+			test the model much.  I also think it would cool to have it correct the whole sentence, but I haven't gotten around to that yet.</p>
 		</div>
 	);
 }
