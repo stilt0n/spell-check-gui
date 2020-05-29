@@ -5,11 +5,25 @@ const About = () : JSX.Element => {
 	return (
 		<div className='about'>
 			<h1> About this App: </h1>
-			<p className='info-card'> This app is a front-end adaptation of <a href='https://norvig.com/spell-correct.html'> Peter Norvig's Python spell check. </a>
+			<p className='info-card'> This app is a front-end adaptation of <a href='https://norvig.com/spell-correct.html'> Peter Norvig's Python spelling corrector. </a>
 			I found his post a while ago and thought it was really cool how little code you need to write in order to write a simple spelling
 			corrector.  I wanted to see if I could use modern JavaScript to write a similarly small spelling corrector, <a href='https://github.com/stilt0n/Spell-Check'>
 			which I have here.</a> This is currently a remake of that spelling corrector in TypeScript and with an added React front-end to make it
 			a little nicer to interact with.
+			<br/><br/>
+			There are currently two spelling correction versions:<br/><br/>
+			The simple version is the original Norvig spelling corrector (adapted to TypeScript).  You can see Norvig's post for more detail on how it works.
+			A quick summary of how it works: given a word, if the word matches a word in your corpus, you're done.  If not, check any word within edit distance
+			1.  If any such words exist in your corpus, choose the most common one.  If not, repeat for edit distance 2.  If no words exist within this distance
+			then throw up your hands and assume the user knew what they were doing.
+			<br/><br/>
+			The experimental version finds every valid word within edit distance 2.  Then it uses a bigram language model which I trained on three classics from 
+			<a href='https://www.gutenberg.org/'>project gutenberg</a> to decide the most probable correction given the previous words.  Right now the model only
+			corrects the final word in your sentence and assumes all other words are correct.  If a previous word is mispelled, the model should still work since
+			it incorporates UNK tokens for unknown words, but it's likely to hurt the prediction.  The model also makes use of sentence begin tokens so even when
+			it is evaluating a single word, the correction should sometimes be different from the simple corrector's because the probability that the correction
+			starts a sentence is taken into account.  I've called the version 'experimental' because I haven't done much to test its output.  The code compiles
+			and seems not to crash, but I haven't had time to check that the results are what you'd expect.
 			</p>
 			<br/><br/>
 			<h2> Plans for Improvement </h2>
@@ -24,13 +38,11 @@ const About = () : JSX.Element => {
 
 			One way to solve this would be to keep track of what corrections are being made when they happen.  I think another approach would likely be 
 			some sort of a modification of an edit distance algorithm. <br/><br/>
-			Then there are some improvements to the actual correction that would be fun to make.  This version is extremely simple in that it only corrects 
-			a single word.  It will only make up to two edits, and it assumes that any valid edit with edit distance <em>n</em> is infinitely more likely than
-			a valid edit with edit distance <em>n + 1.</em>  I think some of these assumptions can be relaxed by adding a language model.  For example you could
-			use a trigram language model, find all edits to a word with edit distance less than 3 and then choose the corrected version of your sentence that minimizes
-			the sentence's perplexity according to your trigram model.  This would also give you the ability to assess if a word is mispelled or simply an unknown
-			word.<br/><br/>
-			I guess the style could use some work too...</p>
+			There will probably be some more changes made to the language model corrector in the near future.  At moment I haven't had the chance to
+			test the model much.  I also think it would cool to have it correct the whole sentence.  The main question there is how to do that in a way
+			that is tractable when corrections are being displayed in real time.  Checking every combination of edits for each word in a sentence will
+			quickly become very slow.  I think with the right simplifying assumptions it should a reasonable task though.<br/><br/>
+			The styling could also use some improvement.</p>
 		</div>
 	);
 }

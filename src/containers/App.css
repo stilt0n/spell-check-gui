@@ -1,3 +1,7 @@
+.version-info {
+  font-style: italic;
+}
+
 .description {
   background: linear-gradient(#6083a3, #aed7fc);
   outline: 1px solid black;

@@ -43,9 +43,11 @@ const N : number = Object.values(WORDS).reduce((total : number, wordCount : numb
 //calculate the probability of the word
 const P = (word : string) : number => (WORDS[word] ? WORDS[word] : 0) / N;
 //find and return the candidate with the highest probability
-const correction = (word : string) : string => candidates(word).reduce((best, cur) => best = P(cur) > P(best) ? cur : best, word);
+export const correction = (word : string) : string => candidates(word).reduce((best, cur) => best = P(cur) > P(best) ? cur : best, word);
 //if word is known assume it's correct, otherwise check edits and then if no valid edits, assume word
 const candidates = (word : string) : Array<string> => known([word]) || known(edits1(word)) || known(edits2(word)) || [word];
+// extra function for use with language model
+export const allCandidates = (word : string) : Array<string> => [word, ...(known(edits1(word)) || []), ...(known(edits2(word)) || [])];
 //check if the word exists in our language corpus
 const known = (words : Array<string>) => {
 	let k = words.filter(w => WORDS[w]);
@@ -94,5 +96,3 @@ const edits1 = (word : string) : Array<string> => {
 }
 //all possible edits of distance two
 const edits2 = (word : string) : Array<string> => _.flatten(edits1(word).map(w => edits1(w)));
-
-export default correction;
